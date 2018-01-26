@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>難読漢字しりとり（仮）</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow-y: none;
+        }
+    </style>
+
+    <script type="text/javascript" src="//23193612.ranking.fc2.com/analyze.js" charset="utf-8"></script>
+
+    <noscript>
+    <META HTTP-EQUIV=Refresh CONTENT="0; URL=nojava.html"></META>
+    </noscript>
+
+</head>
+
+<body onCopy="return false;" onSelectStart="return false;" id="no_select">
+
+    <div id="loader_bg">
+        <div id="loader">
+            <img src="../img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>Now Loading...</p>
+        </div>
+    </div>
+
+    <div id="wrap">
+
+        <p class="page_title">難読漢字しりとり(仮)</p>
+
+        <article id="battle_field" style="position:relative; width:1320px; margin:0 auto;">
+
+            <!-- intro_page -->
+
+            <div id="intro_page">
+
+                <h3 class="siritori_title">「難読漢字しりとり」とは</h3>
+
+                <!-- ルール説明スライド -->
+                <div id="waku_intro" onClick="Switch_intro()">
+                    <ul>
+                        <div id="intro_1">
+                            <h3 class="siritori_subtitle">
+                                <li>対戦相手は<g>難読漢字</g>を出題してきます。あなたはその読みを順番に答え、<g>30問正解</g>すればあなたの1本となります。ただし、途中で<g>3回</g>間違えると対戦相手の1本となります。</li>
+                            </h3>
+                            <h3 class="siritori_subtitle">
+                                <li>
+                                    <g>3本先取</g>した方が勝ちとなります。</li>
+                            </h3>
+                            <h3 class="siritori_subtitle center" style="top:85%">
+                                1/3
+                            </h3>
+                        </div>
+                        <div id="intro_2" style="display:none">
+                            <h3 class="siritori_subtitle">
+                                <li>対戦相手は「しりとり形式」で出題してきます。次の単語（<g>ストック</g>）がなくなったり、読みの最後に<g>「ん」</g>が付いた場合、その時点であなたの1本となります。</li>
+                            </h3>
+                            <h3 class="siritori_subtitle">
+                                <li>複数の読み方ができる場合は、<g>よりストックの少ない文字</g>で終わるようにしましょう。<br>例):「土筆」は「つく<u>し</u>」より「つくしん<u>ぼ</u>」と読む方が効果的です。</li>
+                            </h3>
+                            <h3 class="siritori_subtitle center" style="top:85%">
+                                2/3
+                            </h3>
+                        </div>
+                        <div id="intro_3" style="display:none">
+                            <h3 class="siritori_subtitle">
+                                <li>対戦相手には
+                                    <g>「得意ジャンル」</g>や
+                                    <g>「弱点」</g>があります。相手の特性を活かし、試合を有利に進めていきましょう。</li>
+                            </h3>
+                            <h3 class="siritori_subtitle center" style="top:85%">
+                                3/3
+                            </h3>
+                        </div>
+                    </ul>
+                </div>
+
+                <!-- 対戦相手の表示 -->
+                <h3 id="adv_name" class="center" style="top:30%;">対戦相手：NAME</h3>
+                <img id="img_intro" class="center" style="top:50%;">
+
+                <!-- 対戦データの表示 -->
+                <div id="waku_data">
+                    <h3 class="siritori_title">　＜対戦相手のデータ＞</h3>
+                    <h3 class="siritori_title">　　得意ジャンル ： GENRE</h3>
+                    <h3 class="siritori_title">　　総ストック（総問題数）： <span id="all_stock"></span></h3>
+                    <h3 class="siritori_title">　　アタック（出題数）： 30問</h3>
+                </div>
+
+                <div id="button_battle" class="button center" style="top:85%;">
+                    <input type="submit" value="試合開始" onclick="Show_Slot()">
+                </div>
+
+            </div>
+
+            <!-- intro_page -->
+
+            <!-- slot_page -->
+
+            <div id="slot_page" style="display:none">
+
+                <h3 class="siritori_title">対戦相手：NAME（レベルLEVEL）</h3>
+
+                <!-- 現在の頭文字 -->
+                <h3 class="siritori_title center kashira_text" style="top:25%; font-size: 20px; font-family:'メイリオ';">
+                    最初の文字
+                </h3>
+                <div style="top:45%;" class="flexiblebox waku_kashira center" id="waku_slot_now">
+                    <p id="slot_num" class="kashira_moji"></p>
+                </div>
+
+                <!-- ストップボタン -->
+                <div id="button_prepare" class="button center" style="top:80%;">
+                    <input type="submit" value="ストップ" onclick="Battle_start()">
+                </div>
+
+            </div>
+
+            <!-- slot_page -->
+
+            <!-- battle_page -->
+
+            <div id="battle_page" style="display:none">
+
+                <h3 class="siritori_title">対戦相手：NAME（レベルLEVEL）</h3>
+
+                <!-- 相手の画像 -->
+                <img id="adv1" style=" position: absolute; right:15%; top:34%;">
+                <img id="adv2" style=" position: absolute; right:15%; top:34%;">
+                <img id="adv3" style=" position: absolute; right:15%; top:34%;">
+
+                <!-- 漢字・ストック -->
+                <form name="Q1" style="padding-top: 0px;" onsubmit="return false;">
+                    <div id="kanji_here"></div>
+                    <div id="stock_here"></div>
+                </form>
+
+                <!-- 現在の頭文字 -->
+                <div id="waku_kashira_now" style="left:32%; top:20%;" class="flexiblebox waku_kashira">
+                    <p id="kashira_now" class="kashira_moji"></p>
+                </div>
+
+                <!-- 次の頭文字 -->
+                <div id="kashira_next_set" style="position:absolute; top:55%; right:27%">
+                    <h5 style="position:absolute; font-size: 17px; margin:0px;">次の頭文字</h5>
+                    <div id="waku_kashira_next" class="flexiblebox waku_kashira center">
+                        <p id="kashira_next" class="kashira_moji" style="font-size:40px;">？</p>
+                    </div>
+                </div>
+
+                <!-- 「分岐あり」の表示 -->
+                <div id="waku_bunki" style="position:absolute; left:32%; top:55%;">
+                    <p id="bunki_text" style="position:absolute; left:10%; top:25%;">分岐あり</p>
+                </div>
+
+                <!-- 2人のHP表示 -->
+                <div class="table_HP" style="position:absolute; top:70%; left:10%">
+                    <h5 style="position:absolute; top:0%; margin:0px;">あなたのHP</h5>
+                    <table style="position:absolute; top:42%;">
+                        <tr>　</tr>
+                        <td id="your_mass_1">　</td>
+                        <td id="your_mass_2">　</td>
+                        <td id="your_mass_3">　</td>
+                    </table>
+                </div>
+                <div class="table_HP" style="position:absolute; top:70%; right:10%">
+                    <h5 style="position:absolute; top:0%; right:0%; margin:0px;">NAMEのHP</h5>
+                    <table style="position:absolute; top:42%;">
+                        <tr>　</tr>
+                        <td id="adv_mass_3">　</td>
+                        <td id="adv_mass_2">　</td>
+                        <td id="adv_mass_1">　</td>
+                    </table>
+                </div>
+
+                <!-- アタック残り表示 -->
+                <div id="attack_set" style="position:absolute; top:25%; right:25%">
+                    <h5 style="position:absolute; margin:0px;">アタック残り</h5>
+                    <div id="waku_attack" class="flexiblebox center" style="position:absolute; top:64px;">
+                        <p id="attack_text"></p>
+                    </div>
+                </div>
+
+                <!-- マルバツ画像 -->
+                <img src="../img/maru.png" id="maru" class="marubatsu center" style="display:none;">
+                <img src="../img/batsu.png" id="batsu" class="marubatsu center" style="display:none;">
+
+                <!-- ナイス・エクセレント表示 -->
+                <h5 id="nice" class="nices" style="display:none;">NICE!!</h5>
+                <h5 id="excellent" class="nices" style="display:none;">EXCELLENT!!</h5>
+
+                <!-- 送信ボタン -->
+                <div id="button_saiten" class="button center" style="top:80%;">
+                    <input type="submit" value="OK" onclick="Saiten()">
+                </div>
+                <div id="button_next" class="button center" style="display:none; top:80%;">
+                    <input type="submit" value="次へ" onclick="Attack()">
+                </div>
+                <div id="button_next_battle" class="button center" style="display:none; top:80%;">
+                    <input type="submit" value="次の試合" onclick="Next_battle()">
+                </div>
+                <div id="button_result" class="button center" style="display:none; top:80%;" onClick="Result();">
+                    <input type="submit" value="結果へ" onclick="Result()">
+                </div>
+
+            </div>
+
+            <!-- battle_page -->
+
+            <!-- result_page -->
+
+            <div id="result_page" style="display:none">
+
+                <h3 class="siritori_title">対戦相手：NAME（レベルLEVEL）</h3>
+
+                <h4 id="winner_text"></h4>
+
+                <!-- 相手の画像 -->
+                <img id="adv2_result" style=" position: absolute; right:15%; top:34%;">
+                <img id="adv3_result" style=" position: absolute; right:15%; top:34%;">
+
+                <!-- ツイートボタン -->
+                <a id="a_tweet" class="center" target="_blank" style="display: none;">
+					この結果をツイート
+				</a>
+
+                <!-- 王冠 -->
+                <img src="../img/crown.png" id="crown" class="medal center" style="top:30%; left:30%; display:none;">
+
+                <!-- ホームボタン -->
+                <div id="button_retry" class="button center" style="top:65%;">
+                    <input type="submit" value="再挑戦" onclick="Retry()">
+                </div>
+                <div id="button_home" class="button center" style="top:80%;">
+                    <input type="submit" value="ホームに戻る" onclick="location.href='../index.html'">
+                </div>
+
+            </div>
+
+            <!-- result_page -->
+
+            <!-- メダル表示 -->
+            <img id="your_medal1" src="../img/gold.png" class="battle_medal center" style="top:8%; left:5%; opacity:0;">
+            <img id="your_medal2" src="../img/gold.png" class="battle_medal center" style="top:8%; left:11%; opacity:0;">
+            <img id="your_medal3" src="../img/gold.png" class="battle_medal center" style="top:8%; left:17%; opacity:0;">
+            <img id="adv_medal3" src="../img/gold.png" class="battle_medal center" style="top:8%; left:74%; opacity:0;">
+            <img id="adv_medal2" src="../img/gold.png" class="battle_medal center" style="top:8%; left:80%; opacity:0;">
+            <img id="adv_medal1" src="../img/gold.png" class="battle_medal center" style="top:8%; left:86%; opacity:0;">
+
+        </article>
+
+    </div>
+
+    <!-- [FC2 Analyzer] https://analyzer.fc2.com/  -->
+    <script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2747672" type="text/javascript"></script>
+    <noscript><div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2747672&ref=&href=&wid=0&hei=0&col=0" /></div></noscript>
+    <div style="width:180px;display:inline;">
+        <ol style="text-align:left;list-style-type:none;margin:3px;font-size:10pt;display:inline;"></ol>
+    </div>
+    <!-- [FC2 Analyzer]  -->
+
+    <script type="text/javascript" src="../js/get_time.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script type="text/javascript">
+        // data.jsを取得・ロード
+        let array = location.href.split("/");
+        const js_name = "../js/data_" + array[array.length - 1].replace("html", "js");
+        document.write('<script type="text/javascript" src="' + js_name + '?v='+time+'"><\/script>');
+        // キャッシュの回避
+        document.write('<script type="text/javascript" src="../js/my_functions.js?v='+time+'"><\/script>');
+    </script>
+
+    <script type="text/javascript">
+    
+        // - - ページの初期設定 - -
+
+        document.title = TITLE;
+        $(".page_title").html(PAGE_TITLE);
+
+        // 背景画像の設定
+        $('body').css({
+            backgroundImage: 'url("' + BACKGROUND_URL + '")'
+        });
+
+        // ロード画面の表示
+        $('#wrap').css('display', 'none');
+        $('#loader_bg ,#loader').height($(window).height()).css('display', 'block');
+
+        //全ての読み込みが完了したらロード画面を非表示
+        $(window).load(function() {
+            $('#loader_bg').delay(900).fadeOut(800);
+            $('#loader').delay(600).fadeOut(300);
+            $('#wrap').css('display', 'block');
+
+            if (typeof(GENRE) === "undefined") {
+                $('#kentei_level').css('animation-delay', '0.6s');
+                $('#gokaku_line').css('animation-delay', '0.8s');
+            }
+        });
+
+        // 右クリック禁止
+        $(document).on('contextmenu', function(e) {
+            return false;
+        });
+
+        // - - 出題準備 - -
+
+        let ALL_HIRA_NUM = 69; // 「あ」～「ん」+「が」～「ぽ」
+
+        let hira_index; // 現在選択しているひらがなの番号
+        let kanji_index; // 現在選択している漢字の番号
+
+        let your_HP = 3;
+        let adv_HP = 30; // 攻撃回数も意味する
+        let your_win = 0;
+        let adv_win = 0;
+        let is_bunki;
+        let nice_hira;
+
+        // <body>内文字列の置換
+        $('#img_intro').attr('src', '../img/' + NAME_EN + '1.gif');
+        $('#adv1').attr('src', '../img/' + NAME_EN + '1.gif');
+        $('#adv2').attr('src', '../img/' + NAME_EN + '2.gif');
+        $('#adv3').attr('src', '../img/' + NAME_EN + '3.gif');
+        $('#adv2_result').attr('src', '../img/' + NAME_EN + '2.gif');
+        $('#adv3_result').attr('src', '../img/' + NAME_EN + '3.gif');
+        document.body.innerHTML = Replace(document.body.innerHTML, [
+        	[/LEVEL/g, LEVEL],
+        	[/NAME/g, NAME],
+        	[/GENRE/g, GENRE]
+        ]);
+        focus();
+
+        // ストック算出
+        let sum_stock = 0;
+        for (let i = 0; i < ALL_HIRA_NUM; i++) {
+            if (typeof(KANJI[i]) !== "undefined") {
+                sum_stock += KANJI[i].length;
+            }
+        }
+        document.getElementById("all_stock").innerHTML = sum_stock + "問";
+
+        // ルール説明スライド切り替え
+        function Switch_intro() {
+            if ($('#intro_1').css("display") === "block") {
+                $('#intro_1').fadeOut('normal', function() {
+                    $("#intro_2").fadeIn('normal');
+                });
+            } else if ($('#intro_2').css("display") === "block") {
+                $('#intro_2').fadeOut('normal', function() {
+                    $("#intro_3").fadeIn('normal');
+                });
+            } else if ($('#intro_3').css("display") === "block") {
+                $('#intro_3').fadeOut('normal', function() {
+                    $("#intro_1").fadeIn('normal');
+                });
+            }
+        }
+
+        // - - 試合開始 - -
+
+        // スロット表示
+        let timerId;
+        function Show_Slot() {
+        	// 説明・試合ページからスロットへ
+            let page_id;
+            if ((your_win === 0) && (adv_win === 0)) {
+                $('#waku_intro').fadeOut('normal');
+                $('#adv_name').fadeOut('normal');
+                $('#img_intro').fadeOut('normal');
+                $('#waku_data').fadeOut('normal');
+                $('#button_battle').fadeOut('normal');
+                page_id = 'intro_page';
+            } else {
+                page_id = 'battle_page';
+            }
+            $('#' + page_id).fadeOut('normal', function() {
+
+                // スロット
+                let pre_index = -1;
+
+                function Slot() {
+                    do {
+                        hira_index = Math.floor(Math.random() * ALL_HIRA_NUM);
+                        if (pre_index === hira_index) continue;
+                    } while (KANJI[hira_index].length === 0);
+                    pre_index = hira_index;
+
+                    const kashira_moji = Kana_to_hira(YOMI[hira_index][0].slice(0, 1));
+                    document.getElementById("slot_num").innerHTML = kashira_moji;
+                    
+                    timerId = setTimeout(Slot, 100);
+                }
+
+                Slot();
+
+                $(".kashira_text").fadeIn('normal');
+                $("#waku_slot_now").fadeIn('normal');
+                $("#button_prepare").fadeIn('normal');
+                $("#slot_page").fadeIn('normal');
+            });
+        }
+
+		// スロット停止・攻撃開始
+        function Battle_start() {
+            clearTimeout(timerId);
+
+            Attack();
+
+			// スロットページから対戦ページへ
+            $(".kashira_text").delay(1000).fadeOut('normal');
+            $("#waku_slot_now").delay(1000).fadeOut('normal');
+            $("#button_prepare").delay(1000).fadeOut('normal');
+            $('#slot_page').delay(1000).fadeOut('normal', function() {
+                $("#battle_page").css("display", "block");
+                document.Q1.q1.focus();
+            });
+        }
+
+        // - - 攻撃開始 - -
+
+        function Attack() {
+        	// 表示のリセット
+            $("#maru").css("display", "none");
+            $("#batsu").css("display", "none");
+            $("#waku_bunki").css("display", "none");
+            $("#nice").css("display", "none");
+            $("#excellent").css("display", "none");
+            
+            // 頭文字枠の表示
+            $("#waku_kashira_now").css("display", "default");
+
+            // アタック残り回数の表示
+            document.getElementById("attack_text").innerHTML = adv_HP;
+
+            // HPの配色
+            Coloring(your_HP, adv_HP);
+
+			// 勝敗がついた場合
+            if ((adv_HP <= 0) || (hira_index < 0)) {
+				Player_win();
+                return;
+            } else if (your_HP <= 0) {
+				Player_lose();
+                return;
+            }
+            
+            // - - まだ勝敗がついてない場合 - -
+            
+            // 表示のリセット
+            Show_adv('normal');
+            $("#stock_text").css("display", "none");
+            $("#button_next").css("display", "none");
+            $("#button_saiten").css("display", "default");
+
+            // どの漢字を出題するか決定
+            kanji_index = Math.floor(Math.random() * KANJI[hira_index].length);
+
+            // 現在の頭文字を取り出す
+            let kashira_now = YOMI[hira_index][kanji_index].slice(0, 1);
+            document.getElementById("kashira_now").innerHTML = kashira_now;
+
+            // 次の頭文字
+            document.getElementById("kashira_next").innerHTML = '？';
+
+			// 頭文字の位置の調整
+			const letters = KANJI[hira_index][kanji_index].length;
+			if ((letters % 13) >= 4) {
+				const fix = 4 * ((letters % 13) - 3);
+				const position = (32 - fix) + "%";
+				$("#waku_kashira_now").css("left", position);
+			} else {
+				$("#waku_kashira_now").css("left", "32%");
+			}
+
+            // 分岐ありなし判定
+            let answers = YOMI[hira_index][kanji_index].split(","); // 別解も含む
+            is_bunki = Bunki_hantei(answers);
+            if (is_bunki) {
+                nice_hira = Nice_hira(answers);
+
+                // 「分岐あり」表示
+                $("#bunki").css("display", "default");
+                $("#waku_bunki").css("display", "block");
+            }
+
+            // 漢字と読み
+            const kanji = Add_uni_tag(KANJI[hira_index][kanji_index]);
+            let str = '<div style="text-align:center; width:auto; margin:0 auto;">' +
+            			'<p class="answer center" style="top:30%;">' + answers[0] + '</p>' +
+            			'<h4><kanji_siri class="center" style="top:40%;">' + kanji + '</kanji_siri></h4>' +
+            			'<input type="text" name="q1" id="focus_on" class="center" style="text-align:center; top:60%;">' +
+            		  '</div>';
+            $("#kanji_here").html(str);
+
+            document.Q1.q1.focus();
+        }
+
+        // - - 採点開始 - -
+
+        function Saiten() {
+
+			// 受検者の解答の取得
+            const inputs = $("form input").map(function(index, el) {
+                return $(this).val();
+            });
+            let input = inputs[0];
+                input = input.replace(/\s+/g, "");
+                input = Kana_to_hira(input);
+
+            // 正解の取得
+            let answers = YOMI[hira_index][kanji_index].split(",");
+
+            // 正解判定
+            let is_correct = false;
+            for (let i = 0; i < answers.length; i++) {
+                const answer = Kana_to_hira(answers[i]);
+
+                if (input === answer) {
+                    is_correct = true;
+                    break;
+                }
+            }
+
+            // 正解の場合
+            let kashira_next;
+            if (is_correct) {
+
+                // マル画像
+                $("#maru").css("display", "block");
+
+                kashira_next = Sirimoji(input);
+
+                // フォームを赤色に
+                $('form input').css({
+                    'background-color': 'coral'
+                });
+
+                // NICE判定
+                if (is_bunki) {
+                    let hira_siri = Sirimoji(input);
+
+                    if (nice_hira === hira_siri) {
+                        $("#nice").css("display", "block");
+                    }
+                }
+
+                // 悲しい対戦相手の表示
+                Show_adv('sad');
+                
+                adv_HP += -1;
+
+            } else {
+                // 不正解の場合
+
+                // バツ画像
+                $("#batsu").css("display", "block");
+
+                kashira_next = Sirimoji(answers[0]);
+
+                // フォームを青色に
+                $('form input').css({
+                    'background-color': 'cornflowerblue'
+                });
+
+                // うれしい対戦相手の表示
+                Show_adv('happy');
+
+                your_HP += -1;
+            }
+            
+            // 一度使った漢字は削除
+            KANJI[hira_index].splice(kanji_index, 1);
+            YOMI[hira_index].splice(kanji_index, 1);
+
+            hira_index = Hira_to_num(kashira_next);
+
+            // 次の頭文字を表示
+            document.getElementById("kashira_next").innerHTML = kashira_next;
+
+            // 残りストックの算出
+            let stock;
+            if (typeof(KANJI[hira_index]) === "undefined") {
+                stock = 0;
+            } else {
+                stock = KANJI[hira_index].length;
+            }
+
+            // ストック残りの表示
+            let str = '<h5 id="stock_text">「' + kashira_next + '」のストック<br>残り ' + stock + '</h5>';
+            $("#stock_here").html(str);
+
+            // 正解発表
+            $('.answer').css("display", "block");
+
+            // 次のストックが0なら相手の負け
+            if (hira_index >= 0) {
+            	const stock = KANJI[hira_index].length;
+                if (stock <= 5) {
+                    $("#stock_text").css("color", "gold");
+                }
+                if (stock === 0) {
+                    $("#stock_text").css("color", "red");
+                    hira_index = -2;
+                }
+            }
+
+            // EXCELLENT判定
+            if (hira_index === -1) {
+                $("#excellent").css("display", "block");
+            }
+            
+            // ボタン表示切り替え
+            $("#button_saiten").css("display", "none");
+            $("#button_next").css("display", "default");
+        }
+        
+        // 対戦相手を表示(表情を指定)
+        function Show_adv(face) {
+        	if (face === 'normal') {
+	            $("#adv1").css("display", "default");
+	            $("#adv2").css("display", "none");
+	            $("#adv3").css("display", "none");
+        	} else if (face === 'happy') {
+	            $("#adv1").css("display", "none");
+	            $("#adv2").css("display", "default");
+	            $("#adv3").css("display", "none");
+        	} else if (face === 'sad') {
+	            $("#adv1").css("display", "none");
+	            $("#adv2").css("display", "none");
+	            $("#adv3").css("display", "default");
+        	}
+        }
+
+		// プレイヤーが１勝した時の処理
+		function Player_win() {
+            your_win += 1;
+            $("#your_medal" + your_win).addClass("anim1");
+
+            const str = '<div style="text-align:center;margin-top: 80px">' +
+	            			'<h4><kanji style="font-size: 40px;">あなたの' + your_win + '本目！！</kanji></h4>' +
+	            		'</div>';
+            $("#kanji_here").html(str);
+            
+            Show_adv('sad');
+            $(".marubatsu").css("display", "none");
+            $("#waku_kashira_now").css("display", "none");
+            $("#button_saiten").css("display", "none");
+            $("#button_next").css("display", "none");
+
+            if (your_win <= 2) {
+                $("#button_next_battle").css("display", "default");
+            } else if (your_win === 3) {
+                $("#button_result").css("display", "default");
+            }
+		}
+
+		// プレイヤーが１敗した時の処理
+		function Player_lose() {
+            adv_win += 1;
+            $("#adv_medal" + adv_win).addClass("anim2");
+
+            const str = '<div style="text-align:center;margin-top: 80px">' +
+	            			'<h4><kanji style="font-size: 40px;">' + NAME + 'の' + adv_win + '本目！！</kanji></h4>' +
+	            		'</div>';
+            $("#kanji_here").html(str);
+            
+            Show_adv('happy');
+            $(".marubatsu").css("display", "none");
+            $("#waku_kashira_now").css("display", "none");
+            $("#button_saiten").css("display", "none");
+            $("#button_next").css("display", "none");
+
+            if (adv_win <= 2) {
+                $("#button_next_battle").css("display", "default");
+            } else if (adv_win === 3) {
+                $("#button_result").css("display", "default");
+            }
+		}
+
+		// 次のラウンド
+        function Next_battle() {
+            your_HP = 3;
+            adv_HP = 30;
+            $("#button_next_battle").css("display", "none");
+            Show_Slot();
+        }
+
+        // 決着したときの表示
+        function Result() {
+            let win_message;
+            let win_or_lose;
+            let image_url = "";
+            
+            if (your_win === 3) {
+            	win_message = 'あなたの勝ちです！！';
+                win_or_lose = '勝ち';
+                image_url = IMAGE_URL;
+
+                Write_cookie_score(1, "defeat_level" + LEVEL);
+                $("#crown").css("display", "default");
+
+                $("#adv2_result").css("display", "none");
+            } else if (adv_win === 3) {
+            	win_message = NAME +'の勝ち！！';
+                win_or_lose = '負け';
+
+                $("#adv3_result").css("display", "none");
+            }
+            
+            const str = '<div style="text-align:center;margin-top: 80px">' +
+            				'<h4><kanji style="font-size: 40px;">'+ win_message +'</kanji></h4>' +
+            			'</div>';
+            $("#winner_text").html(str);
+            
+            const twitter_text = encodeURI("【漢字しりとり(仮)】結果：あなたは" + NAME + "(レベル" + LEVEL + ")に" + your_win + "対" + adv_win + "で"+ win_or_lose +"ました。\n「難読漢字検定」") + image_url;
+
+            const twitter_url = 'https://twitter.com/share?url=https://se130054.web.fc2.com&text=' + twitter_text + '&hashtags=' + encodeURI("難読漢字検定,フリーゲーム") + '&count=none&lang=ja';
+
+            $('#a_tweet').attr('href', twitter_url);
+            $("#battle_page").css("display", "none");
+            $("#result_page").css("display", "block");
+            $("#a_tweet").css("display", "block");
+        }
+
+        function Retry() {
+            location.reload();
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>難読漢字検定　試験</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow-y: scroll;
+        }
+    </style>
+
+    <script type="text/javascript" src="//23193612.ranking.fc2.com/analyze.js" charset="utf-8"></script>
+
+    <noscript>
+    	<META HTTP-EQUIV=Refresh CONTENT="0; URL=nojava.html"></META>
+    </noscript>
+
+</head>
+
+<body id="no_select">
+
+    <div id="loader_bg">
+
+        <div id="loader">
+            <img src="../img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>Now Loading...</p>
+        </div>
+
+    </div>
+
+    <div id="saiten_bg" style="display:none;">
+
+        <div id="saiten_tyuu">
+            <img src="../img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>採点中・・・</p>
+        </div>
+
+    </div>
+
+    <!-- wrap_page -->
+
+    <div id="wrap">
+
+        <p class="page_title">難読漢字検定</p>
+
+        <!-- genre_page -->
+
+        <div id="genre_page">
+
+            <article id="genre_field" style="height:340px;">
+
+                <h3>好きなジャンルをお選び下さい。</h3>
+
+                <div id="genre_panels"></div>
+
+            </article>
+
+        </div>
+
+        <!-- genre_page -->
+
+        <!-- test_page -->
+
+        <div id="test_page">
+
+            <article id="test_field" style="position:relative; display:none;">
+
+                <!-- 合格ライン -->
+                <div id="clear_line">
+                    <h3 id="kentei_level" style="opacity:0;"></h3>
+                    <h3 id="gokaku_line" style="animation-delay:0.2s; opacity:0;"></h3>
+                </div>
+
+                <!-- 採点結果 -->
+                <div id="saiten_kekka">
+                    <p>採点結果：<font id="count_up"></font>/<font id="max_score">MAX_SCORE</font>点</p>
+                    <p id="hantei">判定：<font id="judge">judge_text</font></p>
+
+                    <!-- ツイートボタン -->
+                    <a id="a_tweet" target="_blank" style="animation-delay:0.2s; opacity:0;">
+						この結果をツイート
+					</a>
+                </div>
+
+                <!-- 採点結果のメダル表示 -->
+                <div id="medals_on_result">
+                    <img src="../img/gold.png" id="result_gold">
+                    <img src="../img/silver.png" id="result_silver">
+                    <img src="../img/bronze.png" id="result_bronze">
+                </div>
+
+                <!-- 解答フォーム -->
+                <div id="forms"></div>
+
+                <!-- 送信ボタン -->
+                <div id="button_saiten" class="button">
+                    <input type="submit" value="採点開始" onclick="Saiten()">
+                </div>
+                <div id="button_retry" class="button" style="padding-bottom:0px; display:none">
+                    <input type="submit" value="再挑戦" onclick="Retry()">
+                </div>
+                <div id="button_home" class="button" style="display:none">
+                    <input type="submit" value="ホームに戻る" onclick="location.href='../index.html'">
+                </div>
+
+            </article>
+
+        </div>
+
+        <!-- test_page -->
+
+    </div>
+
+    <!-- wrap_page -->
+
+    <script type="text/javascript" src="../js/get_time.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script type="text/javascript">
+        // - - jsファイルを取得・ロード - -
+        
+        const array = location.href.split("/");
+        const js_name = "../js/data_" + array[array.length - 1].replace("html", "js");
+        
+        // time -> キャッシュの回避
+        document.write('<script type="text/javascript" src="' + js_name + '?v='+time+'"><\/script>');
+        document.write('<script type="text/javascript" src="../js/format_of_kentei.js?v='+time+'"><\/script>');
+        document.write('<script type="text/javascript" src="../js/my_functions.js?v='+time+'"><\/script>');
+    </script>
+
+    <script type="text/javascript">
+        // - - ページの初期設定 - -
+
+        document.title = TITLE;
+        $(".page_title").html(PAGE_TITLE);
+
+        // 背景画像の設定
+        $('body').css({
+            backgroundImage: 'url("' + BACKGROUND_URL + '")'
+        });
+
+        // ロード画面の表示
+        $('#wrap').css('display', 'none');
+        $('#loader_bg ,#loader').height($(window).height()).css('display', 'block');
+
+        //全ての読み込みが完了したらロード画面を非表示
+        $(window).load(function() {
+            $('#loader_bg').delay(900).fadeOut(800, function() {
+            	$('.zoom_up').css('position', 'relative');
+            });
+            $('#loader').delay(600).fadeOut(300);
+            $('#wrap').css('display', 'block');
+
+            if (typeof(GENRE) === "undefined") {
+                $('#kentei_level').css('animation-delay', '0.6s');
+                $('#gokaku_line').css('animation-delay', '0.8s');
+            }
+        });
+
+        // 右クリック・範囲選択の禁止
+        let is_copy_ban = true;
+        $(document).on('contextmenu', function(e) {
+        	if (is_copy_ban) {
+            	return false;
+            }
+        });
+        $(document).bind("copy selectstart",function(e){
+        	if (is_copy_ban) {
+            	return false;
+            }
+        });
+
+        // - - 出題準備 - -
+
+		// 受検者のパネル選択で値が確定
+        let genre; // 出題ジャンル(の番号)
+
+		let mode = "試験";
+        let yomi_mem = new Array(); // 出題した漢字の読みを記録
+
+        // ジャンル選択画面の構成
+        if (typeof(GENRE) === "undefined") {
+            // ジャンルがなければ出題開始
+            genre = 0;
+            Be_on_the_test();
+        } else {
+            // ジャンルパネルの構成・表示
+			Make_genre_field();
+        }
+
+        // - - 出題の構成開始 - -
+
+        function Be_on_the_test() {
+        
+            // 試験ページへの切り替え
+			Go_to_test_page();
+
+            // 検定レベル・合格ラインの表示
+            Show_kentei_texts();
+
+            // 解答フォームの構成・表示
+            Make_forms("#forms");
+
+            let asked_q_num = 0; // 現時点で出題した問題数
+
+            // 大問ずつ試験を構成
+            for (let main_q = 0; main_q < MAIN_Q_NUM; main_q++) {
+
+				// この大問における出題数
+				const q_num = Q_NUM[main_q];
+
+                // 2つ目以降の出題カテゴリをランダムで決定
+                if (main_q >= 1) {
+                    genre = Math.floor(Math.random() * KANJI[main_q].length);
+                }
+
+                // 問題文を構成・表示
+                Make_question(main_q, "");
+
+                // 2段組にすべきか判断(trueなら2段)
+                const double_column = (q_num % 2 === 0);
+
+                // 一問ずつ出題
+                let str = "";
+                for (let q = 0; q < q_num; q++) {
+
+                    // 出題漢字(の番号)をランダムに決定
+                    const i = Math.floor(Math.random() * KANJI[main_q][genre].length);
+
+					// 漢字・読み・条件を取得
+					const data = Get_data(main_q, genre, i);
+					const kanji = data[0], yomi = data[1], condition = data[2];
+
+                    // 試験テーブル構成
+                    str += Make_table(data, double_column, q, q_num, main_q, "");
+                    
+                    // 正解の読みを記録
+                    yomi_mem[asked_q_num] = yomi;
+
+                    // 一度使った漢字は削除
+                    KANJI[main_q][genre].splice(i, 1);
+                    YOMI[main_q][genre].splice(i, 1);
+
+                    asked_q_num++;
+                }
+
+                $("#testQ" + (main_q + 1) + "_here").html(str);
+            }
+        }
+
+        // - - 採点開始 - -
+
+        function Saiten() {
+
+            if (!confirm("採点を開始します。よろしいですか?")) {
+                return;
+            }
+            
+            // コピー禁止解除
+            is_copy_ban = false;
+			document.getElementById("no_select").removeAttribute("id");
+
+            // 「採点中」を表示
+            $('#test_page').fadeOut('normal');
+            $('#saiten_bg, #saiten_tyuu').height($(window).height()).fadeIn('normal');
+            $('#clear_line').css('display', 'none');
+
+            $("html").animate({
+                scrollTop: 0
+            }, function() {
+
+                let checked_q_num = 0; // すでに採点した問題数
+                let score = 0; // 試験の合計得点
+
+                // 受検者の解答を取得
+                const inputs = $("form input").map(function(index, el) {
+                    return $(this).val();
+                });
+
+                // 大問ずつ処理
+                for (let main_q = 0; main_q < MAIN_Q_NUM; main_q++) {
+
+                    // １問ずつ正誤判定
+                    for (let q = 0; q < Q_NUM[main_q]; q++) {
+
+                        const input = inputs[checked_q_num];
+                        const yomi = yomi_mem[checked_q_num];
+
+                        // 正誤判定
+                        const data = Check_answer(input, yomi);
+                        const is_correct = data[0], answer = data[1], answers = data[2];
+
+                        // フィールド内のカラーリング
+                        const field_name = 'Q' + (main_q + 1) + 'q' + (q + 1);
+                        Coloring_field(is_correct, field_name);
+                        
+                        // 正解の表示
+                        Show_answers(data, yomi, field_name);
+                        
+                        if (is_correct) {
+                        	score += UNIT_SCORE[main_q]; // 配点分を加点
+                        }
+                        
+                        checked_q_num++; // １問チェック完了
+                    }
+                }
+
+                Write_cookie_score(score, COOKIE); // スコアをcookieに書き込む
+                Make_result(score); // 「採点結果」画面の構成
+				Show_result(score); // 採点結果を表示
+            });
+        }
+
+        // - - 「採点結果」画面の構成 - -
+
+        let judge; // 合否判定(満点 or 合格 or あと少し or 不合格)
+        let judge_text; // 判定テキスト
+        
+		// 結果画面の構成
+        function Make_result(score) {
+
+            // スコアによって判定を分岐
+            if (score === MAX_SCORE) {
+                judge = "満点";
+                judge_text = "<font color='gold'>満点合格</font>です。";
+                $("#judge").css('font-size', '48px');
+
+                // 満点回数をcookieに記録
+                Add_cookie_manten(COOKIE);
+
+            } else if (score >= GOKAKU_SCORE) {
+                judge = "合格";
+                judge_text = "<font color='yellow'>合格</font>です。";
+                $("#judge").css('font-size', '48px');
+            } else if (score >= GOKAKU_SCORE - 30) {
+                judge = "あと少し";
+                judge_text = "あと" + (GOKAKU_SCORE - score) + "点で合格です。";
+            } else {
+                judge = "不合格";
+                judge_text = "不合格です。";
+            }
+
+            // 採点結果をhtmlに反映
+            $("#max_score").html(MAX_SCORE);
+            $("#judge").html(judge_text);
+
+            // Tweetボタンの設定
+            Set_tweet_button(score);
+        }
+
+		// 結果画面の表示
+		function Show_result(score) {
+
+            // 採点結果を表示
+            $("#saiten_kekka").css("display", "block");
+
+			// 「採点中」から「点数カウントアップ」へ
+            $('#saiten_bg, #saiten_tyuu').delay(400).fadeOut('normal', function() {
+
+				// アニメーションでカウントアップ
+				Count_up(score);
+
+	            // ボタン表示の切り替え
+	            $("#button_saiten").css("display", "none");
+	            $("#button_retry").css("display", "default");
+	            $("#button_home").css("display", "default");
+                $('.kensaku_panel').addClass('anim2');
+                $('.kensaku_panel').css('display', 'block');
+	            
+                $('#test_page').fadeIn('normal');
+            });
+		}
+
+        // 再挑戦
+        function Retry() {
+            location.reload();
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+    <!-- [FC2 Analyzer] https://analyzer.fc2.com/  -->
+    <script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2747672" type="text/javascript"></script>
+    <noscript><div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2747672&ref=&href=&wid=0&hei=0&col=0" /></div></noscript>
+    <div style="width:180px;display:inline;">
+        <ol style="text-align:left;list-style-type:none;margin:3px;font-size:10pt;display:inline;"></ol>
+    </div>
+    <!-- [FC2 Analyzer]  -->
+
+</body>
+
+</html>

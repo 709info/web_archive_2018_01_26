@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta name="keywords" content="クイズ,難読漢字,検定">
+    <meta name="description" content="難読漢字検定 ver1.0 - 漢検一級レベルから究極の難問まで">
+    <meta charset="utf-8">
+    <title>難読漢字検定 ver1.0 - 漢検一級レベルから究極の難問まで</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./img/favicon.ico">
+
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            background-image: URL("./img/img_home.jpg");
+            background-attachment: fixed;
+            background-position: 50% 50%;
+            background-size: cover;
+        }
+    </style>
+
+    <script type="text/javascript" src="//23193612.ranking.fc2.com/analyze.js" charset="utf-8"></script>
+
+    <noscript>
+		<META HTTP-EQUIV=Refresh CONTENT="0; URL=./ja/nojava.html"></META>
+	</noscript>
+
+</head>
+
+<body id="home">
+
+    <div id="loader_bg">
+        <div id="loader">
+            <img src="./img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>Now Loading...</p>
+        </div>
+    </div>
+
+    <div id="wrap">
+
+        <p class="page_title anim1" style="animation-delay:1.5s; opacity:0;">難読漢字検定</p>
+
+        <div class="home_text">
+            <p class="anim1" style="animation-delay:1.6s; opacity:0;">
+            	このページでは難読漢字を読むことを中心とした</p>
+            <p class="anim1" style="animation-delay:1.7s; opacity:0;">
+            	漢字能力の検定を行うことができます。</p>
+            <p class="anim1" style="animation-delay:1.8s; opacity:0;">
+            	管理人：<a href="https://se130054.jimdo.com/">709info</a>
+            </p>
+        </div>
+
+        <article id="about_kentei_panel" class="attention_panel anim1">
+            <a href="./ja/introduction.html">
+                <p>当サイト・検定について</p>
+            </a>
+        </article>
+
+		<!-- class_panels -->
+        <div id="class_panels" class="anim1">
+
+            <article id="panel_6class" class="panel">
+                <a href="./ja/6class.html">
+                    <div id="medal_6class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_6class" class="manten_num anim1"></div>
+                    <p>六級</p>
+                    <p id="cookie6_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_5class" class="panel">
+                <a href="./ja/5class.html">
+                    <div id="medal_5class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_5class" class="manten_num anim1"></div>
+                    <p>五級</p>
+                    <p id="cookie5_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_4class" class="panel">
+                <a href="./ja/4class.html">
+                    <div id="medal_4class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_4class" class="manten_num anim1"></div>
+                    <p>四級</p>
+                    <p id="cookie4_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_3class" class="panel">
+                <a href="./ja/3class.html">
+                    <div id="medal_3class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_3class" class="manten_num anim1"></div>
+                    <p>三級</p>
+                    <p id="cookie3_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_2class" class="panel">
+                <a href="./ja/2class.html">
+                    <div id="medal_2class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_2class" class="manten_num anim1"></div>
+                    <p>二級</p>
+                    <p id="cookie2_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_1class" class="panel">
+                <a href="./ja/1class.html">
+                    <div id="medal_1class" class="anim1" style="opacity:0;"></div>
+                    <div id="manten_1class" class="manten_num anim1"></div>
+                    <p>一級</p>
+                    <p id="cookie1_here"></p>
+                </a>
+            </article>
+
+        </div>
+        <!-- class_panels -->
+
+        <div style="clear:both">
+            <p id="bar1" class="page_title" style="opacity: 0;">----------------------------------------</p>
+        </div>
+
+        <p id="kanken_title" class="page_title" style="opacity: 0;">漢検トレーニング</p>
+
+        <div class="home_text">
+            <p id="kanken_text1" style="opacity: 0;">漢検準一級・一級を目標としている方は</p>
+            <p id="kanken_text2" style="opacity: 0;">こちらで勉強することができます。</p>
+        </div>
+
+        <div id="kanken_switch" class="switch" style="opacity:0;">
+            <input id="switch" name="kanken" checked type="checkbox" onclick="Switch_kanken();">
+            <label for="switch"></label>
+        </div>
+
+		<!-- kanken_panels -->
+        <div id="kanken_jun1_panels">
+
+            <article id="panel_jun1_jukugo" class="panel">
+                <a href="./ja/kanken_jun1_jukugo.html">
+                    <div id="medal_kanken_jun1_jukugo" class="anim1" style="opacity:0;"></div>
+                    <p>熟語の読み</p>
+                    <p id="cookie_kanken_jun1_jukugo_here"></p>
+                </a>
+            </article>
+
+        </div>
+
+        <div id="kanken_1_panels">
+
+            <article id="panel_1_ateji" class="panel">
+                <a href="./ja/kanken_1_ateji.html">
+                    <div id="medal_kanken_1_ateji" class="anim1" style="opacity:0;"></div>
+                    <p>当て字</p>
+                    <p id="cookie_kanken_1_ateji_here"></p>
+                </a>
+            </article>
+
+            <article id="panel_1_jukugo" class="panel">
+                <a href="./ja/kanken_1_jukugo.html">
+                    <div id="medal_kanken_1_jukugo" class="anim1" style="opacity:0;"></div>
+                    <p>熟語の読み</p>
+                    <p id="cookie_kanken_1_jukugo_here"></p>
+                </a>
+            </article>
+
+        </div>
+        <!-- kanken_panels -->
+
+        <div style="clear:both">
+            <p id="bar2" class="page_title" style="opacity: 0;">----------------------------------------</p>
+        </div>
+
+        <p id="siritori_title" class="page_title" style="opacity: 0;">漢字しりとり勝負</p>
+
+        <div class="home_text">
+            <p id="siritori_text1" style="opacity: 0;">難読漢字をしりとり形式で出題する</p>
+            <p id="siritori_text2" style="opacity: 0;">対戦型ゲームモードです。</p>
+        </div>
+
+		<!-- siritori_panels -->
+        <div id="siritori_panels">
+
+            <article id="siritori1" class="panel">
+                <a href="./ja/siritori1.html">
+                    <div id="crown_level1"></div>
+                    <img src="./img/wan1.gif" class="adv_on_home">
+                    <p>レベル1</p>
+                    <p>対戦相手:ポチ</p>
+                </a>
+            </article>
+
+            <article id="siritori2" class="panel">
+                <a href="./ja/siritori2.html">
+                    <div id="crown_level2"></div>
+                    <img src="./img/pen1.gif" class="adv_on_home">
+                    <p>レベル2</p>
+                    <p>対戦相手:フブキ</p>
+                </a>
+            </article>
+
+        </div>
+        <!-- siritori_panels -->
+
+        <div style="clear:both">
+            <p id="bar3" class="page_title" style="opacity:0;">----------------------------------------</p>
+        </div>
+
+        <article id="link_panel" class="attention_panel">
+            <a href="./ja/sozai.html">
+                <p>リンク・素材提供元</p>
+            </a>
+        </article>
+    </div>
+
+    <script type="text/javascript" src="./js/get_time.js"></script>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+
+    <script type="text/javascript">
+        // キャッシュの回避
+        document.write('<script type="text/javascript" src="./js/my_functions.js?v=' + time + '"><\/script>');
+    </script>
+
+    <script type="text/javascript">
+        // ロード画面の表示
+        $('#wrap').css('display', 'none');
+        $('#loader_bg ,#loader').height($(window).height()).css('display', 'block');
+
+        // #newsアニメーション
+        $('#news').delay(1500)
+            .css({
+                'top': '-400px'
+            }).animate({
+                'top': '40px'
+            }, 1000).animate({
+                'top': '30px'
+            }, 500)
+            .delay(15000).fadeOut('slow').bind('click', function() {
+                $(this).stop(true, false).fadeOut('slow');
+            });
+
+        //全ての読み込みが完了したらロード画面を非表示
+        $(window).load(function() {
+            $('#loader_bg').delay(900).fadeOut(800);
+            $('#loader').delay(600).fadeOut(300);
+            $('#wrap').css('display', 'block');
+        });
+    </script>
+
+    <script type="text/javascript">
+        // - - メダル・王冠の表示 - - 
+
+        // 1級～6級
+        const MANTEN = [200, 100, 100, 100, 100, 100];
+        const GOKAKU = [180, 80, 80, 80, 80, 80];
+        for (let i = 1; i <= 6; i++) {
+            let score = Get_cookie(i + 'class'); // Number()は避ける null -> 0になるため
+            let manten = Number(Get_cookie(i + 'class_manten'));
+
+			// パネル内の最高点の表示
+            if (score === null) score = "--";
+            $("#cookie" + i + "_here").html('最高点：' + score);
+
+            // メダル画像の表示
+            if (manten !== 0) {
+                $('#manten_' + i + 'class').html('<font size="5">×</font>' + manten);
+            }
+            Show_medal("#medal_" + i + "class", score, MANTEN[i - 1], GOKAKU[i - 1]);
+        }
+
+        // 漢検トレーニング
+        const NAME_LIST = ["kanken_jun1_jukugo", "kanken_1_ateji", "kanken_1_jukugo"];
+        for (let i = 0; i < NAME_LIST.length; i++) {
+            let score = Get_cookie(NAME_LIST[i]);
+            if (score === null) score = "--";
+
+            $("#cookie_" + NAME_LIST[i] + "_here").html('最高点：' + score);
+
+            // メダル画像の表示
+            if (score !== "--") {
+                Show_medal("#medal_" + NAME_LIST[i], score, 100, 90);
+            }
+        }
+
+        // しりとり勝負
+        for (let i = 1; i <= 2; i++) {
+            let defeat = Number(Get_cookie('defeat_level' + i));
+
+            // 王冠画像の表示
+            if (defeat) {
+                $("#crown_level" + i).html('<img src="./img/crown.png" class="center crown_on_home">');
+            }
+        }
+
+        // パネル上のメダル表示
+        function Show_medal(id, score, manten, gokaku) {
+            if (score == manten) {
+                $(id).html('<img src="./img/gold.png" class="medal_on_home">');
+            } else if (score >= gokaku) {
+                $(id).html('<img src="./img/silver.png" class="medal_on_home">');
+            } else if (score >= gokaku - 30) {
+                $(id).html('<img src="./img/bronze.png" class="medal_on_home bronze_on_home">');
+            }
+        }
+
+		// - - 漢検スイッチの設定 - -
+
+        // 漢検スイッチの取得
+        let kanken_switch = Get_cookie('kanken_switch');
+        if (kanken_switch === null) kanken_switch = '準1級';
+
+        // 漢検スイッチへの反映
+        if (kanken_switch === '準1級') {
+            $('input[name="kanken"]').prop("checked", true);
+            $('#kanken_1_panels').css('pointer-events', 'none');
+        } else if (kanken_switch === '1級') {
+            $('input[name="kanken"]').prop("checked", false);
+            $('#kanken_jun1_panels').css('pointer-events', 'none');
+        }
+
+        // 漢検スイッチの切り替え
+        function Switch_kanken() {
+            if (kanken_switch === '1級') {
+                $('#kanken_1_panels').removeClass('anim1');
+                $('#kanken_jun1_panels').removeClass('anim2_out');
+                $('#kanken_jun1_panels').addClass('anim2');
+                $('#kanken_1_panels').addClass('anim1_out');
+                $('#kanken_jun1_panels').css('pointer-events', 'default');
+                $('#kanken_1_panels').css('pointer-events', 'none');
+                kanken_switch = '準1級';
+            } else if (kanken_switch === '準1級') {
+                $('#kanken_jun1_panels').removeClass('anim2');
+                $('#kanken_1_panels').removeClass('anim1_out');
+                $('#kanken_1_panels').addClass('anim1');
+                $('#kanken_jun1_panels').addClass('anim2_out');
+                $('#kanken_1_panels').css('pointer-events', 'default');
+                $('#kanken_jun1_panels').css('pointer-events', 'none');
+                kanken_switch = '1級';
+            }
+
+            Write_cookie(kanken_switch, 'kanken_switch');
+        }
+
+        // - - スライドアニメーション - -
+
+        let id_list = ["bar1", "kanken_title", "kanken_text1", "kanken_text2", "kanken_switch", 
+        			   "kanken_jun1_panels", "kanken_1_panels", "bar2", "siritori_title", 
+        			   "siritori_text1", "siritori_text2", "siritori_panels", "bar3", "link_panel"];
+
+		// 特定の漢検パネルの非表示
+        if (kanken_switch === '1級') {
+	        id_list.some(function(id, i){
+			    if (id === "kanken_jun1_panels") id_list.splice(i,1);
+			});
+        } else if (kanken_switch === '準1級') {
+	        id_list.some(function(id, i){
+			    if (id === "kanken_1_panels") id_list.splice(i,1);
+			});
+        }
+
+        // アニメーションクラスの追加
+        $(window).scroll(function() {
+            for (let i = 0; i < id_list.length; i++) {
+            	const id = "#" + id_list[i];
+            	
+            	// クラスを追加すべきか判定
+                $(id).each(function() {
+                    const img_pos = $(this).offset().top;
+                    const scroll = $(window).scrollTop();
+                    const win_height = $(window).height();
+
+                    // 要素が可視領域に入るとアニメーション開始
+                    let condition;
+                    if (i < id_list.length - 2) {
+                        condition = (scroll > img_pos - win_height + 100);
+                    } else {
+                        condition = (scroll > img_pos - win_height);
+                    }
+                    
+                    if (condition) $(id).addClass('anim1');
+                });
+            }
+        });
+    </script>
+
+    <!-- [FC2 Analyzer] https://analyzer.fc2.com/  -->
+    <script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2747672" type="text/javascript"></script>
+    <noscript><div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2747672&ref=&href=&wid=0&hei=0&col=0" /></div></noscript>
+    <div style="width:180px;display:inline;">
+        <ol style="text-align:left;list-style-type:none;margin:3px;font-size:10pt;display:inline;"></ol>
+    </div>
+    <!-- [FC2 Analyzer]  -->
+
+</body>
+
+</html>

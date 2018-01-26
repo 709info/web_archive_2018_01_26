@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>難読漢字検定　試験</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/favicon.ico">
+
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow-y: scroll;
+        }
+    </style>
+
+    <script type="text/javascript" src="//23193612.ranking.fc2.com/analyze.js" charset="utf-8"></script>
+
+    <noscript>
+    	<META HTTP-EQUIV=Refresh CONTENT="0; URL=nojava.html"></META>
+    </noscript>
+
+</head>
+
+<body>
+
+    <div id="loader_bg">
+        <div id="loader">
+            <img src="../img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>Now Loading...</p>
+        </div>
+    </div>
+
+    <div id="saiten_bg" style="display:none;">
+        <div id="saiten_tyuu">
+            <img src="../img/img-loading.gif" width="80" height="80" alt="Now Loading..." />
+            <p>採点中・・・</p>
+        </div>
+    </div>
+
+    <div id="wrap">
+
+        <p class="page_title">難読漢字検定</p>
+
+        <div id="genre_page">
+
+            <article id="genre_field">
+
+                <h3>特訓したい分野をお選び下さい。</h3>
+
+                <div id="mode_switch" class="mode_switch" style="margin-bottom:15px">
+                    <input id="switch" name="mode" checked type="checkbox" onclick="Switch_mode();">
+                    <label for="switch"></label>
+                </div>
+
+                <div id="genre_panels"></div>
+
+                <article id="about_tokoton_panel" class="genre_panel">
+                    <a onClick="Show_intro();">
+                        <p>とことんモードとは？</p>
+                    </a>
+                </article>
+
+                <article id="fukusyuu_panel" class="genre_panel">
+                    <a onClick="Show_list();">
+                        <p>復習リスト</p>
+                        <p id="cookie_fukusyuu_here"></p>
+                    </a>
+                </article>
+
+		        <article id="edit_panel" class="center attention_panel">
+		        	<a onClick="Show_edit();">
+		            	<p>登録データの管理・編集</p>
+		            </a>
+		        </article>
+		        
+            </article>
+
+        </div>
+
+        <div id="about_tokoton_page">
+
+            <article id="about_tokoton_field">
+
+                <article id="back_panel_on_about" class="back_panel">
+                    <a onClick="Hide_intro();">
+                        <p>もどる</p>
+                    </a>
+                </article>
+
+                <h3>＜とことんモードについて＞</h3>
+                
+                <p>１．登録されている問題を順番に解いていくモードです。</p>
+                
+	                <article id="pre_ateji_panel" class="genre_panel">
+			    		<p class="pre_genre">当て字</p>
+			    		<p class="pre_nokori">残り：700</p>
+				    </article>
+				    
+                <p style="margin-top:70px;">２．分野・レベルを選択して挑戦できます。</p>
+        
+        		<div id="pre_level_panels">
+
+	                <article id="pre_level1_panel" class="panel">
+			    		<p class="pre_level">LEVEL 1</p>
+			    		<p class="pre_nokori">残り：300</p>
+				    </article>
+                
+	                <article id="pre_level2_panel" class="panel">
+			    		<p class="pre_level">LEVEL 2</p>
+			    		<p class="pre_nokori">残り：250</p>
+				    </article>
+                
+	                <article id="pre_level3_panel" class="panel">
+			    		<p class="pre_level">LEVEL 3</p>
+			    		<p class="pre_nokori">残り：150</p>
+				    </article>
+				    
+				</div>
+		
+                <p style="margin-top:70px;">３．間違えた問題は「復習リスト」に登録されます。</p>
+
+                <table id="pre_table1" class="float_left">
+                	<tr>
+            			<th>
+                    		<h4><toi>問4</toi><kanji>沿階草</kanji></h4>
+                    	</th>
+                    	<td>
+                    		<input type="text" value="じゃのひげ" style="background-color:coral;">
+                    	</td>
+                    </tr>
+                	<tr>
+            			<th>
+                    		<h4><toi>問5</toi><kanji>満江紅</kanji></h4>
+                    	</th>
+                    	<td>
+                    		<input type="text" value="うめもどき" style="background-color:cornflowerblue;">
+                    	</td>
+                    </tr>
+                	<tr>
+            			<th>
+                    		<h4><toi>問6</toi><kanji>接続草</kanji></h4>
+                    	</th>
+                    	<td>
+                    		<input type="text" value="すぎな" style="background-color:coral;">
+                    	</td>
+                    </tr>
+				</table>
+                <table id="pre_table2" class="float_right">
+                	<tr>
+            			<th>
+                    		<p><kanji>「満江紅」</kanji>が登録される</p>
+                    	</th>
+                    </tr>
+				</table>
+				
+				<p id="right_arrow1" style="font-size:60px;">⇨</p>
+				
+                <p style="margin-top:120px;">４．復習リストを選択すると、問題に再挑戦できます。</p>
+
+                <article id="pre_fukusyuu_panel" class="panel">
+		    		<p class="pre_text">復習リスト</p>
+		    		<p class="pre_nokori">登録数：25</p>
+			    </article>
+
+                <table id="pre_table3" class="float_right">
+                	<tr>
+            			<th>
+                    		<h4><toi>問1</toi><kanji>満江紅</kanji></h4>
+                    	</th>
+                    	<td>
+                    		<input type="text" value="あかうきくさ" style="background-color:coral;">
+                    	</td>
+                    </tr>
+				</table>
+				
+				<p id="right_arrow2" style="font-size:60px;">⇨</p>
+
+            </article>
+
+        </div>
+
+        <div id="edit_page">
+
+            <article id="edit_field">
+
+                <article id="back_panel_on_edit" class="back_panel">
+                    <a onClick="Hide_edit();">
+                        <p>もどる</p>
+                    </a>
+                </article>
+
+                <h3>＜出題データの編集＞</h3>
+                
+                <div id="edit_table_here"></div>
+                
+                <p>※「リセット」を押すと、もう一度はじめから出題されます。</p>
+
+                <h3 style="margin-top:80px;">＜復習データの編集＞</h3>
+                
+                <div id="edit_table2_here"></div>
+                
+                <p>※「消去」を押すと、復習問題がすべて消去されます。</p>
+
+            </article>
+
+        </div>
+
+        <div id="level_page">
+
+            <article id="level_field">
+
+                <h3>問題の難易度をお選び下さい。</h3>
+
+                <div id="level_panels"></div>
+
+            </article>
+
+        </div>
+
+        <div id="test_page">
+
+            <article id="test_field" style="position:relative; display:none;">
+
+                <!-- 合格ライン -->
+                <div id="clear_line">
+                    <h3 id="kentei_level" style="opacity:0;"></h3>
+                    <h3 id="gokaku_line" style="animation-delay:0.2s; opacity:0;"></h3>
+                    <h3 id="genre_text" style="color:yellow; animation-delay:0.4s; opacity:0;"></h3>
+                </div>
+                <div id="tokoton_texts">
+                    <h3 id="tokoton_text" style="opacity:0;"></h3>
+                    <h3 id="tokoton_text2" style="animation-delay:0.2s; opacity:0;"></h3>
+                </div>
+
+                <!-- 採点結果 -->
+                <div id="saiten_kekka" style="padding-top:0px;">
+                    <p>採点結果：<font id="count_up"></font>/<font id="max_score">MAX_SCORE</font>点</p>
+                    <p id="hantei">判定：<font id="judge">judge_text</font></p>
+
+                    <!-- ツイートボタン -->
+                    <a id="a_tweet" target="_blank" style="animation-delay:0.2s; opacity:0;">
+						この結果をツイート
+					</a>
+                </div>
+                <div id="tokoton_kekka" style="padding:0;">
+                    <p>採点結果：<font id="clear_on_tokoton"></font>/10個</p>
+                    <p id="clear_num">総クリア数：<font id="all_clear_on_tokoton"></font></p>
+                </div>
+                <div id="finish_kekka" style="padding-top:0px;">
+                	<p id="full_tokoton">すべての問題が出題されました。</p>
+                    <p>これまでの成果：総クリア数　<font id="all_clear_on_finish"></font></p>
+                    <p id="otsukare">お疲れ様でした。</p>
+
+                    <!-- ツイートボタン -->
+                    <a id="a_tweet_tokoton" target="_blank" style="margin:0 auto; animation-delay:0.6s; opacity:0;">
+						この結果をツイート
+					</a>
+                </div>
+
+                <!-- 採点結果のメダル表示 -->
+                <div id="medals_on_result">
+                    <img src="../img/gold.png" id="result_gold">
+                    <img src="../img/silver.png" id="result_silver">
+                    <img src="../img/bronze.png" id="result_bronze">
+                </div>
+
+                <!-- 解答フォーム -->
+                <div id="forms"></div>
+
+                <!-- 送信ボタン -->
+                <div id="button_saiten" class="button">
+                    <input type="submit" value="採点開始" onclick="Saiten()">
+                </div>
+                <div id="button_retry" class="button" style="padding-bottom:0px; display:none">
+                    <input type="submit" value="再挑戦" onclick="Retry()">
+                </div>
+                <div id="button_home" class="button" style="display:none">
+                    <input type="submit" value="ホームに戻る" onclick="location.href='../index.html'">
+                </div>
+                <div id="button_next" class="button" style="padding-bottom:0px; display:none">
+                    <input type="submit" value="次の問題へ" onclick="Be_on_the_test()">
+                </div>
+                <div id="button_finish" class="button" style="padding-top:15px; display:none">
+                    <input type="submit" value="ここでやめる" onclick="Finish_tokoton();">
+                </div>
+
+            </article>
+
+        </div>
+
+        <div id="fukusyuu_page">
+
+            <article id="fukusyuu_field" style="position:relative; display:none;">
+
+                <!-- 復習リストメッセージ -->
+                <div id="fukusyuu_texts">
+                    <h3 id="fukusyuu_text" style="opacity:0;"></h3>
+                    <h3 id="kokufuku_text" style="color:yellow; opacity:0; display:none;"></h3>
+                </div>
+
+                <!-- ツイートボタン -->
+                <a id="a_tweet_fukusyuu" target="_blank">
+					この結果をツイート
+				</a>
+
+                <!-- 解答フォーム -->
+                <div id="forms_f"></div>
+
+                <!-- 送信ボタン -->
+                <div id="button_all_answer" class="button" style="padding-top:30px; padding-bottom:40px; display:none;">
+                    <input type="submit" value="解答を表示" onclick="All_answer();">
+                </div>
+                <div id="button_home_fukusyuu" class="button" style="padding-top:30px; display:none;">
+                    <input type="submit" value="ホームに戻る" onclick="location.href='../index.html'">
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+    <!-- [FC2 Analyzer] https://analyzer.fc2.com/  -->
+    <script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2747672" type="text/javascript"></script>
+    <noscript><div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2747672&ref=&href=&wid=0&hei=0&col=0" /></div></noscript>
+    <div style="width:180px;display:inline;">
+        <ol style="text-align:left;list-style-type:none;margin:3px;font-size:10pt;display:inline;"></ol>
+    </div>
+    <!-- [FC2 Analyzer]  -->
+
+    <script type="text/javascript" src="../js/get_time.js"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+
+    <script type="text/javascript">
+        // - - jsファイルを取得・ロード - -
+        
+        const array = location.href.split("/");
+        const js_name = "../js/data_" + array[array.length - 1].replace("html", "js");
+        
+        // time -> キャッシュの回避
+        document.write('<script type="text/javascript" src="' + js_name + '?v='+time+'"><\/script>');
+        document.write('<script type="text/javascript" src="../js/format_of_kentei.js?v='+time+'"><\/script>');
+        document.write('<script type="text/javascript" src="../js/my_functions.js?v='+time+'"><\/script>');
+    </script>
+
+    <script type="text/javascript">
+
+		// - - ページの初期設定 - -
+
+        document.title = TITLE;
+        $(".page_title").html(PAGE_TITLE);
+
+        // 背景画像の設定
+        $('body').css({
+            backgroundImage: 'url("' + BACKGROUND_URL + '")'
+        });
+
+        // ロード画面の表示
+        $('#wrap').css('display', 'none');
+        $('#loader_bg ,#loader').height($(window).height()).css('display', 'block');
+
+		//全ての読み込みが完了したらロード画面を非表示
+        $(window).load(function() {
+            $('#loader_bg').delay(900).fadeOut(800, function() {
+            	$('.zoom_up').css('position', 'relative');
+            });
+            $('#loader').delay(600).fadeOut(300);
+            $('#wrap').css('display', 'block');
+        });
+        
+        // 右クリック・範囲選択の禁止
+        let is_copy_ban = true;
+        $(document).on('contextmenu', function(e) {
+        	if (is_copy_ban) {
+            	return false;
+            }
+        });
+        $(document).bind("copy selectstart",function(e){
+        	if (is_copy_ban) {
+            	return false;
+            }
+        });
+        
+        // 「戻る」パネルの移動
+        const BACK_PANEL_ID = ["#back_panel_on_about", "#back_panel_on_edit"];
+        Move_back_panel(BACK_PANEL_ID);
+
+        // モード(試験 or とことん)のcookie取得
+        let mode = Get_cookie('mode_switch');
+        if (!mode) mode = '試験';
+
+        // - - 出題準備 - -
+        
+		let LIST = new Array(); // 分野・レベル別の復習リスト
+		let LIST_NUM = new Array(); // 登録数
+		let KANJI_CLEAR = new Array(); // クリア数
+		let KANJI_ASKED = new Array(); // 既出数(＝出題済みの問題数)
+		for (let i = 0; i < GENRE.length; i++) {
+			LIST[i] = new Array();
+			LIST_NUM[i] = new Array();
+			KANJI_CLEAR[i] = new Array();
+			KANJI_ASKED[i] = new Array();
+		}
+		let IS_ALL_LIST_NULL;
+		let ALL_LIST_NUM; // 総登録数
+		let ALL_ASKED_NUM; // 総出題数
+		
+		// データ格納
+        Data_set();
+
+    	// - - - ジャンル選択画面の構成 - - -
+    	
+    	// ジャンルフィールド構成
+		Make_genre_field();
+
+		// ジャンルパネル内の表示
+        Show_genre_data();
+
+		// パネル内の表示データの更新
+		Reflect_mode();
+
+        // - - 出題の構成開始 - -
+
+		// 受検者のパネル選択で値が確定
+        let genre;
+        let level;
+
+		// とことんモードで使用
+        let kanji_clear; // クリア数
+        let kanji_asked; // 既出数(＝出題済みの問題数)
+        let kanji_num; // 登録数
+        let is_tokoton_second = false;
+        let kanji_asked_initial;
+        
+        let yomi_mem = new Array(); // 出題した漢字の読みを記録
+
+        function Be_on_the_test() {
+        
+            $("html").animate({
+                scrollTop: 0
+            });
+            
+			if (mode === '試験') {
+				kanji_num = KANJI[genre][level].length;
+            } else if (mode === 'とことん') {
+	            // 既クリア数・既出題数の取得
+	            if (!is_tokoton_second) {
+		            kanji_clear = KANJI_CLEAR[genre][level];
+		            kanji_asked = KANJI_ASKED[genre][level];
+		            kanji_asked_initial = kanji_asked;
+		            kanji_num = KANJI[genre][level].length;
+	            }
+
+                // 出題する漢字が尽きた場合
+                if (kanji_asked >= kanji_num) {
+                    Finish_tokoton();
+                    return;
+                }
+            }
+            
+            // コピー禁止開始
+            is_copy_ban = true;
+			$('body').attr('id', 'no_select');
+
+            // 試験・とことんページへの切り替え
+            Go_to_test_page();
+            
+            // 合格ラインの表示
+            Show_kentei_texts();
+
+            // 解答フォームの表示
+			Make_forms("#forms");
+            
+            let asked_q_num = 0;
+
+			for (let main_q = 0; main_q < MAIN_Q_NUM; main_q++) {
+
+	            // 問題文を取得
+				Make_question(main_q, "");
+
+	            // 出題数の決定
+	            let q_num = Set_q_num(main_q);
+
+	            // 2段組にすべきか判断(trueなら2段)
+	            const double_column = (q_num % 2 === 0);
+	            
+				if (!KANJI[genre][main_q]) {
+					level = 0;
+				} else if (mode === '試験') {
+					level = main_q;
+				}
+
+	            // 一問ずつランダム・順番に出題
+	            let str = "";
+	            for (let q = 0; q < q_num; q++) {
+
+	                // 出題漢字(の番号)をランダムに決定
+	                let i;
+	                if (mode === '試験') {
+	                    i = Math.floor(Math.random() * KANJI[genre][level].length);
+	                } else if (mode === 'とことん') {
+	                    i = kanji_asked_initial;
+	                }
+
+	                if (!KANJI[genre][level][i]) break;
+
+					// 漢字・読み・条件を取得
+					const data = Get_data(genre, level, i);
+					const kanji = data[0], yomi = data[1], condition = data[2];
+
+                    // 試験テーブル構成
+                    str += Make_table(data, double_column, q, q_num, main_q, "");
+
+	                // 正解の読みを記録
+	                yomi_mem[asked_q_num] = yomi;
+
+	                // 一度使った漢字は削除
+	                KANJI[genre][level].splice(i, 1);
+	                YOMI[genre][level].splice(i, 1);
+	                
+	                asked_q_num++;
+	            }
+
+	            $("#testQ"+ (main_q + 1) +"_here").html(str);
+	            
+	            if (mode === 'とことん' || KANJI[genre].length < 2) break;
+            }
+        }
+        
+	    // 採点数の決定
+        function Set_q_num(main_q) {
+        	let q_num;
+            if (mode === '試験') {
+				if (KANJI[genre].length < 2) {
+	            	q_num = 50;
+	            } else {
+	            	q_num = Q_NUM[main_q];
+	            }
+            } else if (mode === 'とことん') {
+                q_num = 10;
+            }
+            
+            return q_num;
+        }
+
+        // - - 採点開始 - -
+
+        function Saiten() {
+
+            if (mode === '試験') {
+                if (!confirm("採点を開始します。よろしいですか?")) {
+                    return;
+                }
+
+                $('#test_page').fadeOut('normal');
+                $('#saiten_bg, #saiten_tyuu').height($(window).height()).fadeIn('normal');
+            }
+            
+            // コピー禁止解除
+            is_copy_ban = false;
+			document.getElementById("no_select").removeAttribute("id");
+
+            $("html").animate({
+                scrollTop: 0
+            }, function() {
+
+	            // 受験者の解答を取得
+	            const inputs = $("form input").map(function(index, el) {
+	                return $(this).val();
+	            });
+
+	            let list = LIST[genre][level]; // 復習リスト
+	            const cookie = COOKIE +'_'+ GENRE_EN[genre] +'_'+ LEVEL_EN[level];
+
+				let score = 0; // 合計得点
+	            let checked_q_num = 0; // すでに採点した問題数
+	            let correct_num = 0; // 正解数
+
+				for (let main_q = 0; main_q < MAIN_Q_NUM; main_q++) {
+
+		            // 採点数の決定
+		            let q_num = Set_q_num(main_q);
+
+	                // 一問ずつ正誤判定
+	                for (let q = 0; q < q_num; q++) {
+
+	                    if (typeof inputs[checked_q_num] === "undefined") break;
+
+	                    const input = inputs[checked_q_num];
+	                    const yomi = yomi_mem[checked_q_num];
+
+	                    // 正誤判定
+	                    const data = Check_answer(input, yomi);
+	                    const is_correct = data[0], answer = data[1], answers = data[2];
+
+	                    // フィールド内のカラーリング
+	                    const field_name = 'Q'+ (main_q + 1) +'q'+ (q + 1);
+	                    Coloring_field(is_correct, field_name);
+
+	                    // 正解の表示
+	                    Show_answers(data, yomi, field_name);
+	                    
+	                    if (is_correct) {
+							score += UNIT_SCORE[main_q]; // 配点分を加点
+							correct_num++;
+	                    } else if (mode === 'とことん') {
+	                        // 復習リストに追加
+							Add_to_list(q + kanji_asked, cookie + '_list');
+	                    }
+
+	                    checked_q_num++;
+	                }
+	                
+		            if (mode === 'とことん' || KANJI[genre].length < 2) break;
+	            }
+	            
+				if (mode === 'とことん') score = correct_num;
+					
+                Make_result(score); // 採点結果を出力
+				Show_result(score); // 採点結果を表示
+                
+                if (mode === '試験') {
+                    Write_cookie_score(score, COOKIE);
+                    Write_cookie_score(score, COOKIE + '_' + GENRE_EN[genre]);
+                } else if (mode === 'とことん') {
+                    kanji_clear += correct_num;
+                    kanji_asked += checked_q_num;
+					
+                    Write_cookie(kanji_clear, cookie + '_clear');
+                    Write_cookie(kanji_asked, cookie + '_asked');
+                }
+
+                if (mode === 'とことん') {
+                    $("#tokoton_texts").css("display", "none");
+                    is_tokoton_second = true;
+                } else if (mode === '試験') {
+                	// clear_lineの削除
+                    const elem = document.getElementById('clear_line');
+                    elem.parentNode.removeChild(elem);
+                }
+            });
+        }
+
+        // - - 採点結果の出力 - -
+
+        let judge; // 合否判定(満点 or 合格 or あと少し or 不合格)
+        let judge_text; // 判定テキスト
+        
+        function Make_result(score) {
+        
+	        if (mode === '試験') {
+
+	            // スコアによって判定を分岐
+	            if (score === MAX_SCORE) {
+	                judge = "満点";
+	                $("#judge").css('font-size', '48px');
+	                judge_text = "<font color='gold'>満点合格</font>です。";
+	            } else if (score >= GOKAKU_SCORE) {
+	                judge = "合格";
+	                $("#judge").css('font-size', '48px');
+	                judge_text = "<font color='yellow'>合格</font>です。";
+	            } else if (score >= GOKAKU_SCORE - 30) {
+	                judge = "あと少し";
+	                judge_text = "あと" + (GOKAKU_SCORE - score) + "点で合格です。";
+	            } else {
+	                judge = "不合格";
+	                judge_text = "不合格です。";
+	            }
+
+	            // 採点結果をhtmlに反映
+	            $("#max_score").html(MAX_SCORE);
+	            $("#judge").html(judge_text);
+
+	            // 採点結果をtwitterボタンに反映
+				Set_tweet_button(score);
+
+            } else if (mode === 'とことん') {
+            
+                // 採点結果をhtmlに反映
+                $("#all_clear_on_tokoton").html(kanji_clear + "個");
+	            $('#clear_on_tokoton').html(score + "個");
+            }
+        }
+
+		// 結果画面の表示
+		function Show_result(score) {
+	        if (mode === '試験') {
+	            $('#saiten_bg, #saiten_tyuu').delay(400).fadeOut('normal', function() {
+
+		            $("#clear_line_here").css("display", "none");
+		            $("#saiten_kekka").css("display", "block");
+		            $("#button_saiten").css("display", "none");
+		            $("#button_retry").css("display", "default");
+		            $("#button_home").css("display", "default");
+	                $('#test_page').fadeIn('normal');
+		            
+					// アニメーションでカウントアップ
+					Count_up(score);
+	            });
+
+	        } else if (mode === 'とことん') {
+                $("#tokoton_kekka").css("display", "block");
+                $("#tokoton_kekka").addClass('anim1');
+                $("#clear_num").addClass('anim1');
+	            $("#button_saiten").css("display", "none");
+	            $("#button_next").css("display", "default");
+	            $("#button_finish").css("display", "default");
+	        }
+	        
+	        $('.kensaku_panel').addClass('anim2');
+	        $('.kensaku_panel').css('display', 'block');
+		}
+
+		// とことんモード中断・もしくは終了
+        function Finish_tokoton() {
+        
+			Show_otsukare_page();
+
+            $("#all_clear_on_finish").html(kanji_clear +"個/"+ kanji_num +"個");
+            
+            // Tweetボタンの設定
+			Set_tweet_button();
+
+            window.scrollTo(0, 0);
+        }
+
+		// - - 復習モード - -
+
+        // 復習リストの表示
+        function Show_list() {
+
+            if (IS_ALL_LIST_NULL) return;
+
+			mode = "復習";
+            
+            // コピー禁止開始
+            is_copy_ban = true;
+			$('body').attr('id', 'no_select');
+
+            // 復習ページへの切り替え
+            Go_to_test_page();
+
+            $("#fukusyuu_text").html("復習リスト　登録数：" + ALL_LIST_NUM + "問");
+            
+            // 解答フォームの表示
+			Make_forms("#forms_f");
+
+			// ジャンル・分野ごとに出題
+			let asked_q_num = 0;
+            for (let genre_f = 0; genre_f < GENRE.length; genre_f++) {
+            	for (let level_f = 0; level_f < LEVEL.length; level_f++) {
+            	
+            		const list = LIST[genre_f][level_f];
+
+	                if (!list) continue;
+
+	                // 問題文を取得(配点は無し)
+					Make_question(genre_f, level_f);
+
+	                const q_num = LIST_NUM[genre_f][level_f];
+	                const list_array = list.split(",");
+
+	                // 一問ずつ順番に出題
+	                let str = "";
+	                for (let q = 0; q < q_num; q++) {
+
+	                    // 出題漢字を決定
+	                    const i = Number(list_array[q]) - q;
+
+						// 漢字・読み・条件を取得
+						const data = Get_data(genre_f, level_f, i);
+						const kanji = data[0], yomi = data[1], condition = data[2];
+
+	                    // 出題テーブル構成(常に2段組)
+						str += Make_table(data, true, q, q_num, genre_f, level_f);
+
+	                    // 正解の読みを記録
+	                    yomi_mem[asked_q_num] = yomi;
+
+	                    // 一度使った漢字は削除
+	                    KANJI[genre_f][level_f].splice(i, 1);
+	                    YOMI[genre_f][level_f].splice(i, 1);
+	                    
+	                    asked_q_num++;
+	                }
+	                
+	                $("#fukusyuuQ" + (genre_f + 1) + "L"+(level_f+1)+"_here").html(str);
+                }
+            }
+        }
+
+		// 復習リストの解答表示
+        function All_answer() {
+            
+            // コピー禁止解除
+            is_copy_ban = false;
+			document.getElementById("no_select").removeAttribute("id");
+
+            $("html").animate({
+                scrollTop: 0
+            }, function() {
+
+        		// - - 採点開始 - -
+
+	            let cleared_sum = 0; // 克服した総数
+	            let checked_q_num = 0; // すでに採点した問題数
+
+	            // 分野・レベルずつ処理
+	            for (let genre_f = 0; genre_f < GENRE.length; genre_f++) {
+		            for (let level_f = 0; level_f < LEVEL.length; level_f++) {
+
+						let list = LIST[genre_f][level_f];
+	            		let cleared = 0; // 大問ごとに克服した数
+
+		                // その分野の復習リストがなければパス
+		                if (!list) continue;
+
+		                // 受験者の解答を取得
+		                const form_input = 'form[name=Q' + (genre_f + 1) + 'L'+(level_f+1)+'_f] input';
+		                const inputs = $(form_input).map(function(index, el) {
+		                    return $(this).val();
+		                });
+		                
+		                let correct_num = 0; // 正解数
+		                const cookie = COOKIE + '_' + GENRE_EN[genre_f] + '_' + LEVEL_EN[level_f];
+		                const list_array = list.split(",");
+
+		                // 一問ずつ正誤判定
+console.log(LIST_NUM[genre_f][level_f] + cleared);
+		                for (let q = 0; q < LIST_NUM[genre_f][level_f] + cleared; q++) {
+
+		                    if (typeof inputs[q] === "undefined") break;
+
+	                        const input = inputs[q];
+	                        const yomi = yomi_mem[checked_q_num];
+
+	                        // 正誤判定
+	                        const data = Check_answer(input, yomi);
+	                        const is_correct = data[0], answer = data[1], answers = data[2];
+
+	                        // フィールド内のカラーリング
+	                        const field_name = 'Q' + (genre_f + 1) + 'L'+(level_f + 1)+'q' + (q + 1);
+	                        Coloring_field(is_correct, field_name);
+
+	                        // 正解の表示
+	                        Show_answers(data, yomi, field_name);
+
+		                    if (is_correct) {
+		                    
+								// 復習リストへの追加
+								Remove_from_list(q, cleared, list_array[q], cookie + '_list');
+								
+		                        cleared++;
+		                        correct_num++;
+		                    }
+
+		                    checked_q_num++;
+		                }
+
+						// クリア数をcookieに記録
+		                kanji_clear = Number(Get_cookie(cookie + '_clear'));
+		                Write_cookie(kanji_clear + cleared, cookie + '_clear');
+		                
+		                cleared_sum += cleared;
+		            }
+	            }
+
+	            $("#kokufuku_text").css("display", "block");
+	            $("#kokufuku_text").html("克服した数：" + cleared_sum + "個");
+	            $('#kokufuku_text').addClass('anim1');
+
+	            // 採点結果をtwitterボタンに反映
+				Set_tweet_button(cleared_sum);
+
+	        	$("#button_home_fukusyuu").css("display", "block");
+	            $("#button_all_answer").css("display", "none");
+                $('.kensaku_panel').addClass('anim2');
+                $('.kensaku_panel').css('display', 'block');
+	        });
+        }
+
+        // 再挑戦
+        function Retry() {
+            location.reload();
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+
+</html>

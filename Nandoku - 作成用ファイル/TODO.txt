@@ -1,0 +1,25 @@
+＜DEBUGリスト＞
+
+○全体
+
+　・検索結果の文字化け「??」
+
+○class.html
+
+○kanken.html
+
+○siritori~.html
+
+
+＜TODOリスト＞
+
+○siritori~.html
+
+　・Enterキーで採点に入るようにする。
+
+
+＜CODEリスト＞
+
+○siritori~.html
+
+　・文字コードを用いた尻文字取得
